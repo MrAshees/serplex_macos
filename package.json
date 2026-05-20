@@ -1,0 +1,13 @@
+{
+    "name":  "serplex",
+    "version":  "0.0.17",
+    "private":  true,
+    "type":  "module",
+    "scripts":  {
+                    "tauri":  "tauri",
+                    "tauri:build":  "tauri build"
+                },
+    "devDependencies":  {
+                            "@tauri-apps/cli":  "^2.11.2"
+                        }
+}

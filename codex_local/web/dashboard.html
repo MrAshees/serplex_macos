@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Serplex Dashboard</title>
+    <link rel="stylesheet" href="/dashboard.css" />
+  </head>
+  <body>
+    <main class="dash-shell">
+      <header class="dash-head">
+        <div>
+          <a class="back-link" href="/">← Serplex</a>
+          <h1>Dashboard сервера</h1>
+        </div>
+        <div class="status-strip">
+          <span id="lastUpdate">обновление...</span>
+          <span id="remoteStatus" class="status-pill">server</span>
+          <span id="ollamaStatus" class="status-pill">ollama</span>
+        </div>
+      </header>
+
+      <section class="hero-grid">
+        <article class="metric-card accent">
+          <span class="metric-label">CPU</span>
+          <strong id="cpuLoad" class="loading-text">загрузка...</strong>
+          <div class="bar"><span id="cpuBar"></span></div>
+          <small id="cpuMeta">ожидание ответа сервера</small>
+        </article>
+        <article class="metric-card accent">
+          <span class="metric-label">RAM</span>
+          <strong id="ramUsed" class="loading-text">загрузка...</strong>
+          <div class="bar"><span id="ramBar"></span></div>
+          <small id="ramMeta">ожидание ответа сервера</small>
+        </article>
+        <article class="metric-card">
+          <span class="metric-label">Ollama</span>
+          <strong id="ollamaVersion" class="loading-text">загрузка...</strong>
+          <small id="ollamaModels">ожидание ответа сервера</small>
+        </article>
+      </section>
+
+      <section class="dash-section">
+        <div class="section-title">
+          <h2>Видеокарты</h2>
+          <span id="gpuSummary">загрузка...</span>
+        </div>
+        <div id="gpuGrid" class="gpu-grid"><div class="empty loading-box">Загрузка данных GPU...</div></div>
+      </section>
+
+      <section class="two-col">
+        <article class="dash-panel">
+          <div class="section-title">
+            <h2>Диски</h2>
+          </div>
+          <div id="diskList" class="disk-list"><div class="empty loading-box">Загрузка данных дисков...</div></div>
+        </article>
+        <article class="dash-panel">
+          <div class="section-title">
+            <h2>Температуры</h2>
+          </div>
+          <pre id="tempLog" class="temp-log">Загрузка температур...</pre>
+        </article>
+      </section>
+    </main>
+
+    <script src="/dashboard.js"></script>
+  </body>
+</html>

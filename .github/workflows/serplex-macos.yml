@@ -1,0 +1,74 @@
+name: Serplex macOS Tauri build
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to build. Leave empty to use app-version.json."
+        required: false
+        default: ""
+      arch:
+        description: "macOS architecture to build."
+        required: true
+        default: "both"
+        type: choice
+        options:
+          - both
+          - arm64
+          - x64
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: macOS ${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            platform: macos-arm64
+            runner: macos-14
+          - arch: x64
+            platform: macos-x64
+            runner: macos-13
+    if: ${{ github.event.inputs.arch == 'both' || github.event.inputs.arch == matrix.arch }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build Serplex for macOS
+        shell: pwsh
+        run: |
+          $version = "${{ github.event.inputs.version }}"
+          $args = @("--bundles", "app")
+          if ($version) {
+            ./Build-Serplex-Tauri.ps1 -Version $version -OutputDir "dist/SerplexTauri" -TauriArgs $args -SkipNpmInstall
+          } else {
+            ./Build-Serplex-Tauri.ps1 -OutputDir "dist/SerplexTauri" -TauriArgs $args -SkipNpmInstall
+          }
+
+      - name: Upload macOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: serplex-${{ matrix.platform }}
+          path: dist/SerplexTauri/*
+          if-no-files-found: error

@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Serplex</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="serplex-shell">
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <button id="newChat" class="nav-action strong">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+            <span>Новый чат</span>
+          </button>
+          <button id="openProjectButton" class="nav-action">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3Z" /></svg>
+            <span>Открыть папку</span>
+          </button>
+          <button id="focusSearch" class="nav-action">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" /></svg>
+            <span>Поиск</span>
+          </button>
+          <a class="nav-action" href="/dashboard">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5" /><path d="M4 19h16" /><path d="M8 16v-5" /><path d="M13 16V8" /><path d="M18 16v-3" /></svg>
+            <span>Dashboard</span>
+          </a>
+        </div>
+
+        <section class="projects-section">
+          <div class="side-label">Проекты</div>
+          <label class="chat-search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" /></svg>
+            <input id="chatSearch" type="search" placeholder="Поиск чатов и проектов" autocomplete="off" />
+          </label>
+          <div id="projectList" class="project-list" aria-live="polite"></div>
+        </section>
+
+        <button id="settingsButton" class="settings-row" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.03.03a2 2 0 1 1-2.83 2.83l-.03-.03A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6V20a2 2 0 1 1-4 0v-.04a1.7 1.7 0 0 0-1-.56 1.7 1.7 0 0 0-1.88.34l-.03.03a2 2 0 1 1-2.83-2.83l.03-.03A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1H4a2 2 0 1 1 0-4h.04a1.7 1.7 0 0 0 .56-1 1.7 1.7 0 0 0-.34-1.88l-.03-.03a2 2 0 1 1 2.83-2.83l.03.03A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6V4a2 2 0 1 1 4 0v.04a1.7 1.7 0 0 0 1 .56 1.7 1.7 0 0 0 1.88-.34l.03-.03a2 2 0 1 1 2.83 2.83l-.03.03A1.7 1.7 0 0 0 19.4 9c.2.35.4.68.6 1H20a2 2 0 1 1 0 4h-.04a1.7 1.7 0 0 0-.56 1Z" /></svg>
+          <span>Настройки</span>
+        </button>
+      </aside>
+
+      <main class="chat-main">
+        <div class="top-controls">
+          <button id="topOpenProject" class="compact-project">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3Z" /></svg>
+            <span id="topProjectName">Проект</span>
+          </button>
+          <select id="modelSelect" class="model-select" aria-label="Модель"></select>
+        </div>
+
+        <section class="conversation">
+          <div id="emptyHero" class="empty-hero">
+            <div class="hero-kicker">Serplex</div>
+            <h1 id="heroTitle">Что будем делать?</h1>
+            <div class="starter-grid">
+              <button class="starter" data-prompt="Изучи проект и кратко объясни, как он устроен.">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-1.5Z" /><path d="M8 7h5M8 11h6" /></svg>
+                <span>Объяснить проект</span>
+              </button>
+              <button class="starter" data-prompt="Найди подходящую стартовую задачу, реализуй её и объясни изменения.">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6" /></svg>
+                <span>Найти стартовую задачу</span>
+              </button>
+              <button class="starter" data-prompt="Проверь проект на очевидные проблемы UX, архитектуры и запуска.">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
+                <span>Проверить проект</span>
+              </button>
+            </div>
+          </div>
+          <div id="messages" class="messages" aria-live="polite"></div>
+        </section>
+
+        <section class="composer-wrap">
+          <form id="chatForm" class="composer">
+            <textarea id="prompt" rows="2" placeholder="Описание задачи. Serplex проверит файлы и подготовит решение в выбранной папке."></textarea>
+            <div id="composerMeta" class="composer-meta hidden"></div>
+            <div class="composer-controls">
+              <button id="composerMenuButton" class="icon-button" type="button" title="Добавить контекст" aria-label="Добавить контекст" aria-expanded="false" aria-controls="composerMenu">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              </button>
+              <button id="fullAccessToggle" class="access-toggle" type="button" aria-pressed="false">
+                <span class="access-dot"></span>
+                <span>Full Access</span>
+              </button>
+              <button id="cancelGeneration" class="cancel-button hidden" type="button" title="Остановить генерацию" aria-label="Остановить генерацию">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h8v8H8z" /></svg>
+              </button>
+              <button id="sendPrompt" class="send-button" type="submit" title="Отправить" aria-label="Отправить">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7-7 7 7" /></svg>
+              </button>
+            </div>
+            <div id="composerMenu" class="composer-menu hidden" role="menu" aria-label="Контекст задачи">
+              <button id="attachFileButton" class="composer-menu-action" type="button" role="menuitem">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /><path d="M8 13h8M8 17h5" /></svg>
+                <span>Добавить файл из папки</span>
+              </button>
+              <button id="taskTagsButton" class="composer-menu-action" type="button" role="menuitem" aria-expanded="false" aria-controls="taskTagPanel">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7" /><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v3H4Z" /><path d="m9 15 2 2 4-4" /></svg>
+                <span>Теги задач</span>
+                <svg class="composer-menu-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+              </button>
+              <div id="taskTagPanel" class="task-tag-panel hidden">
+                <div id="taskTagList" class="task-tag-list"></div>
+              </div>
+            </div>
+          </form>
+          <div class="context-row">
+            <span id="workspaceLabel">папка не выбрана</span>
+            <span id="chatMeta">готово</span>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="projectModal" class="modal-backdrop hidden">
+      <section class="project-modal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+        <div class="modal-head">
+          <div>
+            <div class="modal-kicker">Workspace</div>
+            <h2 id="projectModalTitle">Открыть папку</h2>
+          </div>
+          <button id="closeProjectModal" class="icon-button" type="button" title="Закрыть" aria-label="Закрыть">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+        </div>
+        <div class="picker-panel">
+          <button id="nativeFolderPick" class="native-picker" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3Z" /></svg>
+            <span>Выбрать в Проводнике</span>
+          </button>
+          <form id="projectPathForm" class="path-form">
+            <input id="projectPathInput" type="text" autocomplete="off" placeholder="D:\projects\my-app" />
+            <button class="modal-primary" type="submit">Открыть</button>
+          </form>
+        </div>
+        <div class="recent-panel">
+          <div class="modal-section-title">Недавние проекты</div>
+          <div id="recentProjects" class="recent-list"></div>
+        </div>
+      </section>
+    </div>
+
+    <div id="confirmModal" class="modal-backdrop hidden">
+      <section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmBody">
+        <div class="confirm-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4" /><path d="M12 17h.01" /><path d="M10.3 3.9 2.5 18a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" /></svg>
+        </div>
+        <div class="confirm-copy">
+          <h2 id="confirmTitle">Подтвердить действие</h2>
+          <p id="confirmBody">Это действие нужно подтвердить.</p>
+        </div>
+        <div class="confirm-actions">
+          <button id="confirmCancel" class="confirm-secondary" type="button">Отмена</button>
+          <button id="confirmAccept" class="confirm-primary danger" type="button">Удалить</button>
+        </div>
+      </section>
+    </div>
+
+    <div id="settingsModal" class="modal-backdrop hidden">
+      <section class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="modal-head">
+          <div>
+            <div class="modal-kicker">Serplex</div>
+            <h2 id="settingsTitle">Настройки</h2>
+          </div>
+          <button id="closeSettingsModal" class="icon-button" type="button" title="Закрыть" aria-label="Закрыть">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+        </div>
+        <form id="settingsForm" class="settings-form">
+          <aside class="settings-nav" aria-label="Разделы настроек">
+            <button class="settings-back" id="settingsCancel" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+              <span>Назад в приложение</span>
+            </button>
+            <button class="settings-tab active" type="button" data-settings-section="general">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.03.03a2 2 0 1 1-2.83 2.83l-.03-.03A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6V20a2 2 0 1 1-4 0v-.04a1.7 1.7 0 0 0-1-.56 1.7 1.7 0 0 0-1.88.34l-.03.03a2 2 0 1 1-2.83-2.83l.03-.03A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1H4a2 2 0 1 1 0-4h.04a1.7 1.7 0 0 0 .56-1 1.7 1.7 0 0 0-.34-1.88l-.03-.03a2 2 0 1 1 2.83-2.83l.03.03A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6V4a2 2 0 1 1 4 0v.04a1.7 1.7 0 0 0 1 .56 1.7 1.7 0 0 0 1.88-.34l.03-.03a2 2 0 1 1 2.83 2.83l-.03.03A1.7 1.7 0 0 0 19.4 9c.2.35.4.68.6 1H20a2 2 0 1 1 0 4h-.04a1.7 1.7 0 0 0-.56 1Z" /></svg>
+              <span>Основные</span>
+            </button>
+            <button class="settings-tab" type="button" data-settings-section="authorization">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 7a4 4 0 1 0-4 4" /><path d="m21 2-9.6 9.6" /><path d="m15 8 2 2 4-4" /><path d="m7 14 3 3" /><path d="m3 18 3 3 4-4-3-3Z" /></svg>
+              <span>Авторизация</span>
+            </button>
+            <button class="settings-tab" type="button" data-settings-section="configuration">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4Z" /><path d="M8 9h8M8 13h5" /></svg>
+              <span>Конфигурация</span>
+            </button>
+            <button class="settings-tab" type="button" data-settings-section="updates">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.6-6.4" /><path d="M21 3v6h-6" /></svg>
+              <span>Обновления</span>
+            </button>
+            <button class="settings-tab" type="button" data-settings-section="access">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5Z" /><path d="M9 12l2 2 4-5" /></svg>
+              <span>Доступ</span>
+            </button>
+          </aside>
+          <div class="settings-content">
+            <section class="settings-page active" data-settings-page="general">
+              <div class="settings-section">
+                <h3>Основные</h3>
+                <p>Клиент Serplex для работы с проектами, чатами и серверной моделью.</p>
+              </div>
+              <div class="settings-grid">
+                <span>Версия приложения</span>
+                <strong id="settingsAppVersion">0.0.0</strong>
+                <span>Активный проект</span>
+                <strong id="settingsProjectName">Без проекта</strong>
+              </div>
+            </section>
+            <section class="settings-page" data-settings-page="authorization">
+              <div class="settings-section">
+                <h3>Авторизация</h3>
+                <p>API-ключ открывает доступ к серверной модели. При окончании срока действия требуется новый ключ из админки.</p>
+              </div>
+              <div class="settings-status">
+                <span id="settingsKeyStatus">Ключ не настроен</span>
+              </div>
+              <label>
+                API-ключ
+                <input id="settingsApiKey" type="password" autocomplete="off" placeholder="API-ключ из админки" />
+              </label>
+              <label class="settings-check">
+                <input id="settingsClearKey" type="checkbox" />
+                <span>Удалить сохранённый ключ с этого компьютера</span>
+              </label>
+            </section>
+            <section class="settings-page" data-settings-page="configuration">
+              <div class="settings-section">
+                <h3>Конфигурация</h3>
+                <p>Параметры подключения и модели задаются сборкой приложения.</p>
+              </div>
+              <div class="settings-grid">
+                <span>Модель</span>
+                <strong id="settingsModelName">-</strong>
+                <span>Vision model</span>
+                <strong id="settingsVisionModel">-</strong>
+              </div>
+            </section>
+            <section class="settings-page" data-settings-page="updates">
+              <div class="settings-section">
+                <h3>Обновления</h3>
+                <p>Проверка обновлений использует подписанный manifest.</p>
+              </div>
+              <div class="settings-grid">
+                <span>Статус</span>
+                <strong id="settingsUpdateStatus">Не проверено</strong>
+              </div>
+            </section>
+            <section class="settings-page" data-settings-page="access">
+              <div class="settings-section">
+                <h3>Доступ</h3>
+                <p>Режим Full Access разрешает операции за пределами выбранной папки.</p>
+              </div>
+              <div class="settings-grid">
+                <span>Текущий режим</span>
+                <strong id="settingsAccessMode">Sandbox</strong>
+              </div>
+            </section>
+            <div class="settings-actions">
+              <button class="confirm-primary" type="submit">Сохранить</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

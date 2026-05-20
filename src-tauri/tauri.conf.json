@@ -1,0 +1,58 @@
+{
+    "$schema":  "https://schema.tauri.app/config/2",
+    "productName":  "Serplex",
+    "version":  "0.0.17",
+    "identifier":  "dev.ashees.serplex",
+    "build":  {
+                  "frontendDist":  "../tauri-ui"
+              },
+    "app":  {
+                "windows":  [
+                                {
+                                    "label":  "main",
+                                    "title":  "Serplex",
+                                    "url":  "loading.html",
+                                    "width":  1440,
+                                    "height":  900,
+                                    "minWidth":  980,
+                                    "minHeight":  680,
+                                    "resizable":  true,
+                                    "fullscreen":  false
+                                }
+                            ],
+                "security":  {
+                                 "csp":  null
+                             }
+            },
+    "bundle":  {
+                   "active":  true,
+                   "targets":  "all",
+                   "category":  "DeveloperTool",
+                   "shortDescription":  "Serplex desktop agent",
+                   "longDescription":  "Serplex local desktop shell for project chats and server-side model access.",
+                   "icon":  [
+                                "icons/32x32.png",
+                                "icons/128x128.png",
+                                "icons/128x128@2x.png",
+                                "icons/icon.png",
+                                "icons/icon.icns",
+                                "icons/icon.ico"
+                            ],
+                   "resources":  {
+                                     "resources/app":  "app"
+                                 },
+                   "macOS":  {
+                                 "minimumSystemVersion":  "11.0"
+                             },
+                   "linux":  {
+                                 "appimage":  {
+                                                  "bundleMediaFramework":  false
+                                              },
+                                 "deb":  {
+                                             "depends":  [
+
+                                                         ]
+                                         }
+                             }
+               }
+}

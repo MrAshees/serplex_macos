@@ -1,0 +1,11 @@
+{
+  "appPort": 18787,
+  "endpoint": "https://serplex.ashees.dev",
+  "wireguardEndpoint": "http://10.253.77.2:11434",
+  "useWireguard": false,
+  "noTunnel": true,
+  "skipPull": true,
+  "updateManifestUrl": "https://serplex.ashees.dev/serplex-updates/manifest.json",
+  "visionModel": "llama3.2-vision:11b",
+  "appHost": "127.0.0.1"
+}

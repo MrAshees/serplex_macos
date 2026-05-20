@@ -1,0 +1,23 @@
+[package]
+name = "serplex"
+version = "0.0.17"
+description = "Serplex desktop agent"
+authors = ["Serplex"]
+edition = "2021"
+
+[[bin]]
+name = "Serplex"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2", features = [] }
+
+
+
+
+
