@@ -1,6 +1,9 @@
 name: Serplex macOS Tauri build
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       version:
