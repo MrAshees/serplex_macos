@@ -37,7 +37,6 @@ jobs:
           - arch: x64
             platform: macos-x64
             runner: macos-13
-    if: ${{ github.event.inputs.arch == 'both' || github.event.inputs.arch == matrix.arch }}
 
     steps:
       - uses: actions/checkout@v4
@@ -59,6 +58,7 @@ jobs:
         run: npm ci
 
       - name: Build Serplex for macOS
+        if: ${{ github.event_name == 'push' || github.event.inputs.arch == 'both' || github.event.inputs.arch == matrix.arch }}
         shell: pwsh
         run: |
           $version = "${{ github.event.inputs.version }}"
@@ -70,6 +70,7 @@ jobs:
           }
 
       - name: Upload macOS artifact
+        if: ${{ github.event_name == 'push' || github.event.inputs.arch == 'both' || github.event.inputs.arch == matrix.arch }}
         uses: actions/upload-artifact@v4
         with:
           name: serplex-${{ matrix.platform }}
